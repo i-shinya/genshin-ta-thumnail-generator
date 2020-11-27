@@ -1,0 +1,1 @@
+# genshin-ta-thumnbail-generator
