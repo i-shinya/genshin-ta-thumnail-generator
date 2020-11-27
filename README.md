@@ -1,1 +1,1 @@
-# genshin-ta-thumnbail-generator
+# genshin-ta-thumnail-generator
