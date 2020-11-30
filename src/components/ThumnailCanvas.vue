@@ -11,116 +11,25 @@
       <v-col class="mb-4">
         <a id="download_link" ref="downloadLink" href="" @click="generatImageUrl">
           <v-btn color="success">
-            サムネイルを生成する
+            <span class="button-text">サムネイルを生成する</span>
           </v-btn>
         </a>
-      </v-col>
-    </v-row>
-    <v-row class="text-center" align="center">
-      <v-col class="mb-4">
-        <span>
-          キャラ選択
-        </span>
-      </v-col>
-      <v-col class="mb-4">
-        <SelectCharactor v-model="charactor1"/>
-      </v-col>
-      <v-col class="mb-4">
-        <SelectCharactor v-model="charactor2"/>
-      </v-col>
-      <v-col class="mb-4">
-        <SelectCharactor v-model="charactor3"/>
-      </v-col>
-      <v-col class="mb-4">
-        <SelectCharactor v-model="charactor4"/>
-      </v-col>
-    </v-row>
-    <v-row class="text-center" align="center">
-      <v-col class="mb-4">
-        <span style="vertical-align: middle;">背景色選択</span>
-      </v-col>
-      <v-col class="mb-4">
-        <ColorPicker v-model="pickColor1" label="カラー1"/>
-        <span>
-          常に選択
-        </span>
-      </v-col>
-      <v-col class="mb-4">
-        <ColorPicker v-model="pickColor2" label="カラー2"/>
-        <span>
-          グラデーション選択時のみ
-        </span>
       </v-col>
     </v-row>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Watch, Vue } from "vue-property-decorator"
-import { fabric } from "fabric"
-import ColorPicker from '@/components/parts/ColorPicker.vue'
+import { Component, Watch, Vue, Prop } from 'vue-property-decorator'
+import { fabric } from 'fabric'
 import SelectCharactor, { Charactor } from '@/components/parts/SelectCharactor.vue'
 
 @Component({
   components: {
-    ColorPicker,
     SelectCharactor
   },
   data() {
     return {
-      charactor1: null,
-      charactor2: null,
-      charactor3: null,
-      charactor4: null,
-      // デフォルトカラー定義
-      pickColor1: {
-        alpha: 0.291319580078125,
-        hex: "#051851",
-        hexa: "#0518514A",
-        hsla: {
-          h: 0.291319580078125,
-          s: 224.8597596339792,
-          l: 0.16923935226982253,
-          a: 0.8789143451566647
-        },
-        hsva: {
-          h: 0.291319580078125,
-          s: 224.8597596339792,
-          v: 0.9355555216471354,
-          a: 0.3179862467447917
-        },
-        hue: 224.8597596339792,
-        rgba: {
-          r: 0.291319580078125,
-          g: 81,
-          b: 24,
-          a: 5
-        }
-      },
-      pickColor2: {
-        alpha: 1,
-        hex: "#4A4A4A",
-        hexa: "#4A4A4AFF",
-        hsla: {
-          h: 1,
-          s: 0,
-          l: 0.291319580078125,
-          a: 0
-        },
-        hsva: {
-          h: 1,
-          s: 0,
-          v: 0,
-          a: 0.291319580078125
-        },
-        hue: 0,
-        rgba: {
-          r: 1,
-          g: 74,
-          b: 74,
-          a: 74
-        }
-      },
     }
   }
 })
@@ -128,19 +37,25 @@ export default class ThumnailCanvas extends Vue {
 
   private canvas: fabric.Canvas
   // 選択色
+  @Prop()
   private pickColor1: any
+  @Prop()
   private pickColor2: any
   // 選択キャラ
+  @Prop()
   private charactor1: string
+  @Prop()
   private charactor2: string
+  @Prop()
   private charactor3: string
+  @Prop()
   private charactor4: string
 
   public mounted() {
     this.canvas = new fabric.Canvas("canvas")
     this.canvas.setWidth(960)
     this.canvas.setHeight(540)
-    const color: string = "#4A4A4A"
+    const color = "#4A4A4A"
     // const gradientOptions = {
     //   type: 'linear',
     //   coords: {
@@ -208,16 +123,8 @@ export default class ThumnailCanvas extends Vue {
   @Watch('charactor2', { deep: true, immediate: false })
   @Watch('charactor3', { deep: true, immediate: false })
   @Watch('charactor4', { deep: true, immediate: false })
-  private changeCharactor(newValue: string, oldValue: string) {
-    this.changeProperties()
-  }
-
   @Watch('pickColor1', { deep: true, immediate: false })
   @Watch('pickColor2', { deep: true, immediate: false })
-  private updateColor() {
-    this.changeProperties()
-  }
-
   private changeProperties() {
     if (!this.canvas) {
       return
@@ -249,6 +156,10 @@ export default class ThumnailCanvas extends Vue {
   .canvas-area {
     width: 960px;
     margin: 0 auto;
+  }
+
+  .button-text {
+    text-decoration: none;
   }
 }
 </style>

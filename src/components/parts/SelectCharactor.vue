@@ -4,7 +4,7 @@
       v-model="selectedCharactor"
       :items="charactrorList"
       item-text="ja"
-      item-value="en"
+      item-value="tag"
       label="Standard"
     ></v-select>
   </div>
@@ -46,10 +46,10 @@ import { Component, Prop, Watch, Vue } from "vue-property-decorator"
     }
   }
 })
-export default class ColorPicker extends Vue {
+export default class SelectCharactor extends Vue {
   @Prop()
-  private value: Charactor
-  private selectedCharactor: Charactor
+  private value: string
+  private selectedCharactor: string
 
   @Watch('value', { deep: true, immediate: true })
   private watchValue() {
