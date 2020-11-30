@@ -7,6 +7,8 @@
       :charactor2="charactor2"
       :charactor3="charactor3"
       :charactor4="charactor4"
+      :time-text="timeText"
+      :time-text-color="timeTextColor"
     />
     <v-row class="text-center" align="center">
       <v-col class="mb-4">
@@ -44,6 +46,30 @@
         <SelectCharactor v-model="charactor4"/>
       </v-col>
     </v-row>
+    <v-row class="text-center" align="center">
+      <v-col class="mb-4">
+        <span>
+          タイム
+        </span>
+      </v-col>
+      <v-col class="mb-4">
+        <v-text-field
+          v-model="timeText"
+          label="Main input"
+          hide-details="auto"
+        ></v-text-field>
+      </v-col>
+      <v-col class="mb-4">
+        <span>
+          文字色
+        </span>
+      </v-col>
+      <v-col class="mb-4">
+        <ColorPicker v-model="timeTextColor"/>
+        <span>
+        </span>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -56,6 +82,7 @@ import SelectCharactor, { Charactor } from '@/components/parts/SelectCharactor.v
 @Component({
   data() {
     return {
+      timeText: '12\'34\'\'56',
       charactor1: null,
       charactor2: null,
       charactor3: null,
@@ -107,6 +134,30 @@ import SelectCharactor, { Charactor } from '@/components/parts/SelectCharactor.v
           g: 74,
           b: 74,
           a: 74
+        }
+      },
+      timeTextColor: {
+        alpha: 0.291319580078125,
+        hex: "#FFFFFF",
+        hexa: "#FFFFFF4A",
+        hsla: {
+          h: 0.291319580078125,
+          s: 224.8597596339792,
+          l: 1,
+          a: 0
+        },
+        hsva: {
+          h: 0.291319580078125,
+          s: 224.8597596339792,
+          v: 0,
+          a: 1
+        },
+        hue: 224.8597596339792,
+        rgba: {
+          r: 0.291319580078125,
+          g: 255,
+          b: 255,
+          a: 255
         }
       },
     }

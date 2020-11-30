@@ -18,3 +18,13 @@ import Header from '@/components/layout/Header.vue'
 })
 export default class App extends Vue {}
 </script>
+
+<style lang="scss">
+html {
+  font-family: 'Noto Serif JP', serif;
+}
+
+body {
+  font-family: 'Noto Serif JP', serif;
+}
+</style>

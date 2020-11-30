@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app color="primary" dark>
+  <v-app-bar app color="primary" dark class="Header">
     <div class="d-flex align-center">
       <v-img
         alt="Vuetify Logo"
@@ -10,7 +10,7 @@
         width="64"
       />
 
-      <span class="header-text">原神サムネイルジェネレーター</span>
+      <span class="Header-Text">サムネイルジェネレーター</span>
       <!-- <v-img
         alt="Vuetify Name"
         class="shrink mt-1 hidden-sm-and-down"
@@ -47,3 +47,12 @@ import { Component, Prop, Watch, Vue } from 'vue-property-decorator'
 })
 export default class Header extends Vue {}
 </script>
+
+<style lang="scss" scoped>
+.Header {
+  .Header-Text {
+    font-size: 26px;
+    font-family: 'Noto Serif JP', serif;
+  }
+}
+</style>

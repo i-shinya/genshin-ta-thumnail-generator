@@ -50,6 +50,11 @@ export default class ThumnailCanvas extends Vue {
   private charactor3: string
   @Prop()
   private charactor4: string
+  // タイム
+  @Prop()
+  private timeText: string
+  @Prop()
+  private timeTextColor: any
 
   public mounted() {
     this.canvas = new fabric.Canvas("canvas")
@@ -86,7 +91,7 @@ export default class ThumnailCanvas extends Vue {
     // const gradient: fabric.Gradient = new fabric.Gradient(gradientOptions)
     // this.canvas.setBackgroundColor(gradient, () => {})
     this.canvas.backgroundColor = this.pickColor1.hex
-
+    this.addTimeText()
     this.canvas.renderAll()
   }
 
@@ -94,6 +99,19 @@ export default class ThumnailCanvas extends Vue {
     const downloadLink: any = this.$refs.downloadLink
     downloadLink.href = this.canvas.toDataURL()
     downloadLink.download = 'genshin_ta_thumnail.jpg'
+  }
+
+  // タイムのテキストを追加する
+  private addTimeText() {
+    const timeText = new fabric.Textbox(this.timeText, {
+      width: 100,
+      top: 30,
+      left: 500,
+      fontSize: 80,
+    })
+    timeText.set({ fill: this.timeTextColor.hex })
+    this.canvas.add(timeText)
+    this.canvas.renderAll()
   }
 
   private addImage(charactor: string, num: number) {
@@ -119,12 +137,15 @@ export default class ThumnailCanvas extends Vue {
     })
   }
 
+  // 何か入力内容に変更があったら全て更新する
   @Watch('charactor1', { deep: true, immediate: false })
   @Watch('charactor2', { deep: true, immediate: false })
   @Watch('charactor3', { deep: true, immediate: false })
   @Watch('charactor4', { deep: true, immediate: false })
   @Watch('pickColor1', { deep: true, immediate: false })
   @Watch('pickColor2', { deep: true, immediate: false })
+  @Watch('timeText', { deep: true, immediate: false })
+  @Watch('timeTextColor', { deep: true, immediate: false })
   private changeProperties() {
     if (!this.canvas) {
       return
@@ -141,6 +162,9 @@ export default class ThumnailCanvas extends Vue {
     }
     if (this.charactor4) {
       this.addImage(this.charactor4, 4)
+    }
+    if (this.timeText && this.timeTextColor) {
+      this.addTimeText()
     }
 
     this.canvas.renderAll()
