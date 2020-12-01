@@ -1,5 +1,10 @@
 <template>
-  <v-app-bar app color="primary" dark class="Header">
+  <v-app-bar
+    app
+    color="primary"
+    dark
+    class="Header"
+  >
     <div class="d-flex align-center">
       <v-img
         alt="Vuetify Logo"
@@ -21,7 +26,7 @@
       /> -->
     </div>
 
-    <v-spacer></v-spacer>
+    <v-spacer />
 
     <v-btn
       href="https://github.com/i-shinya/genshin-ta-thumnail-generator"

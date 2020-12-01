@@ -10,9 +10,7 @@
   "dependencies": {
     "@types/fabric": "^4.2.0",
     "core-js": "^3.6.5",
-    "eslint-plugin-prettier-vue": "^2.1.1",
     "fabric": "^4.2.0",
-    "prettier-vue": "^1.1.2",
     "register-service-worker": "^1.7.1",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
@@ -57,9 +55,9 @@
     },
     "extends": [
       "plugin:vue/essential",
-      "@vue/typescript",
+      "plugin:vue/strongly-recommended",
       "plugin:vue/recommended",
-      "prettier/vue"
+      "@vue/typescript"
     ],
     "parserOptions": {
       "ecmaVersion": 2020

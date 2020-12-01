@@ -19,7 +19,7 @@
         v-model="color"
         dot-size="15"
         swatches-max-height="200"
-      ></v-color-picker>
+      />
     </v-dialog>
   </div>
 </template>

@@ -7,86 +7,126 @@
       :charactor2="charactor2"
       :charactor3="charactor3"
       :charactor4="charactor4"
+      :content="content"
+      :content-text-color="contentTextColor"
       :time-text="timeText"
       :time-text-color="timeTextColor"
     />
-    <v-row class="text-center" align="center">
-      <v-col class="mb-4">
+    <v-row
+      class="text-center"
+      align="center"
+    >
+      <v-col>
         <span style="vertical-align: middle;">背景色選択</span>
       </v-col>
-      <v-col class="mb-4">
-        <ColorPicker v-model="pickColor1" label="カラー1"/>
+      <v-col>
+        <ColorPicker
+          v-model="pickColor1"
+          label="カラー1"
+        />
         <span>
           常に選択
         </span>
       </v-col>
-      <v-col class="mb-4">
-        <ColorPicker v-model="pickColor2" label="カラー2"/>
+      <v-col>
+        <ColorPicker
+          v-model="pickColor2"
+          label="カラー2"
+        />
         <span>
           グラデーション選択時のみ
         </span>
       </v-col>
     </v-row>
-    <v-row class="text-center" align="center">
-      <v-col class="mb-4">
+    <v-row
+      class="text-center"
+      align="center"
+    >
+      <v-col>
         <span>
           キャラ選択
         </span>
       </v-col>
-      <v-col class="mb-4">
-        <SelectCharactor v-model="charactor1"/>
+      <v-col>
+        <SelectCharactor v-model="charactor1" />
       </v-col>
-      <v-col class="mb-4">
-        <SelectCharactor v-model="charactor2"/>
+      <v-col>
+        <SelectCharactor v-model="charactor2" />
       </v-col>
-      <v-col class="mb-4">
-        <SelectCharactor v-model="charactor3"/>
+      <v-col>
+        <SelectCharactor v-model="charactor3" />
       </v-col>
-      <v-col class="mb-4">
-        <SelectCharactor v-model="charactor4"/>
+      <v-col>
+        <SelectCharactor v-model="charactor4" />
       </v-col>
     </v-row>
-    <v-row class="text-center" align="center">
-      <v-col class="mb-4">
+    <v-row
+      class="text-center"
+      align="center"
+    >
+      <v-col>
         <span>
-          タイム
+          コンテンツ
         </span>
       </v-col>
-      <v-col class="mb-4">
-        <v-text-field
-          v-model="timeText"
-          label="Main input"
-          hide-details="auto"
-        ></v-text-field>
+      <v-col>
+        <SelectContent v-model="content" />
       </v-col>
-      <v-col class="mb-4">
+      <v-col>
         <span>
           文字色
         </span>
       </v-col>
-      <v-col class="mb-4">
-        <ColorPicker v-model="timeTextColor"/>
+      <v-col>
+        <ColorPicker v-model="contentTextColor" />
+        <span />
+      </v-col>
+    </v-row>
+    <v-row
+      class="text-center"
+      align="center"
+    >
+      <v-col>
         <span>
+          タイム
         </span>
+      </v-col>
+      <v-col>
+        <v-text-field
+          v-model="timeText"
+          label="Main input"
+          hide-details="auto"
+        />
+      </v-col>
+      <v-col>
+        <span>
+          文字色
+        </span>
+      </v-col>
+      <v-col>
+        <ColorPicker v-model="timeTextColor" />
+        <span />
       </v-col>
     </v-row>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { Component, Vue } from "vue-property-decorator"
 import ThumnailCanvas from "@/components/ThumnailCanvas.vue";
 import ColorPicker from '@/components/parts/ColorPicker.vue'
 import SelectCharactor, { Charactor } from '@/components/parts/SelectCharactor.vue'
+import SelectContent from '@/components/parts/SelectContent.vue'
 
 @Component({
   data() {
     return {
       timeText: '12\'34\'\'56',
-      charactor1: null,
-      charactor2: null,
-      charactor3: null,
-      charactor4: null,
+      charactor1: { tag: 'amber', ja: 'アンバー', en: 'amber' },
+      charactor2: { tag: 'beidou', ja: '北斗', en: 'beidou' },
+      charactor3: { tag: 'bennett', ja: 'ベネット', en: 'bennett' },
+      charactor4: { tag: 'berbara', ja: 'バーバラ', en: 'berbara' },
+      content: { tag: 'spiralAbyss1', ja: '深境螺旋1層', en: 'Spiral Abyss Floor1' },
       // デフォルトカラー定義
       pickColor1: {
         alpha: 0.291319580078125,
@@ -136,7 +176,7 @@ import SelectCharactor, { Charactor } from '@/components/parts/SelectCharactor.v
           a: 74
         }
       },
-      timeTextColor: {
+      contentTextColor: {
         alpha: 0.291319580078125,
         hex: "#FFFFFF",
         hexa: "#FFFFFF4A",
@@ -160,13 +200,45 @@ import SelectCharactor, { Charactor } from '@/components/parts/SelectCharactor.v
           a: 255
         }
       },
+      timeTextColor: {
+        alpha: 1,
+        hex: "#F4FF00",
+        hexa: "#F4FF00FF",
+        hsla: {
+          h: 1,
+          s: 62.63786076736754,
+          l: 0.5,
+          a: 1
+        },
+        hsva: {
+          h: 1,
+          s: 62.63786076736754,
+          v: 1,
+          a: 1
+        },
+        hue: 62.63786076736754,
+        rgba: {
+          r: 1,
+          g: 0,
+          b: 255,
+          a: 244
+        }
+      },
     }
   },
   components: {
     ColorPicker,
     ThumnailCanvas,
-    SelectCharactor
+    SelectCharactor,
+    SelectContent
   }
 })
 export default class Home extends Vue {}
 </script>
+
+<style lang="scss" scoped>
+.home {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+</style>
