@@ -112,10 +112,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator"
-import ThumnailCanvas from "@/components/ThumnailCanvas.vue";
+import { Component, Vue } from 'vue-property-decorator'
+import ThumnailCanvas from '@/components/ThumnailCanvas.vue';
 import ColorPicker from '@/components/parts/ColorPicker.vue'
-import SelectCharactor, { Charactor } from '@/components/parts/SelectCharactor.vue'
+import SelectCharactor from '@/components/parts/SelectCharactor.vue'
 import SelectContent from '@/components/parts/SelectContent.vue'
 
 @Component({
@@ -130,8 +130,8 @@ import SelectContent from '@/components/parts/SelectContent.vue'
       // デフォルトカラー定義
       pickColor1: {
         alpha: 0.291319580078125,
-        hex: "#051851",
-        hexa: "#0518514A",
+        hex: '#051851',
+        hexa: '#0518514A',
         hsla: {
           h: 0.291319580078125,
           s: 224.8597596339792,
@@ -153,33 +153,33 @@ import SelectContent from '@/components/parts/SelectContent.vue'
         }
       },
       pickColor2: {
-        alpha: 1,
-        hex: "#4A4A4A",
-        hexa: "#4A4A4AFF",
-        hsla: {
-          h: 1,
-          s: 0,
-          l: 0.291319580078125,
-          a: 0
+        'alpha': 0.05,
+        'hex': '#F0BF3E',
+        'hexa': '#F0BF3E0D',
+        'hsla': {
+          'h': 43.48314606741573,
+          's': 0.8557692307692307,
+          'l': 0.592156862745098,
+          'a': 0.05
         },
-        hsva: {
-          h: 1,
-          s: 0,
-          v: 0,
-          a: 0.291319580078125
+        'hsva': {
+          'h': 43.48314606741573,
+          's': 0.7416666666666666,
+          'v': 0.9411764705882353,
+          'a': 0.05
         },
-        hue: 0,
-        rgba: {
-          r: 1,
-          g: 74,
-          b: 74,
-          a: 74
+        'hue': 43.48314606741573,
+        'rgba': {
+          'r': 240,
+          'g': 191,
+          'b': 62,
+          'a': 0.05
         }
       },
       contentTextColor: {
         alpha: 0.291319580078125,
-        hex: "#FFFFFF",
-        hexa: "#FFFFFF4A",
+        hex: '#FFFFFF',
+        hexa: '#FFFFFF4A',
         hsla: {
           h: 0.291319580078125,
           s: 224.8597596339792,
@@ -202,8 +202,8 @@ import SelectContent from '@/components/parts/SelectContent.vue'
       },
       timeTextColor: {
         alpha: 1,
-        hex: "#F4FF00",
-        hexa: "#F4FF00FF",
+        hex: '#F4FF00',
+        hexa: '#F4FF00FF',
         hsla: {
           h: 1,
           s: 62.63786076736754,

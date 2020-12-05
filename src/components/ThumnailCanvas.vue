@@ -29,6 +29,7 @@ import { Component, Watch, Vue, Prop } from 'vue-property-decorator'
 import { fabric } from 'fabric'
 import { Charactor } from '@/components/parts/SelectCharactor.vue'
 import { Content } from '@/components/parts/SelectContent.vue'
+import { Color } from '@/components/parts/ColorPicker.vue'
 
 @Component({
   data() {
@@ -41,9 +42,9 @@ export default class ThumnailCanvas extends Vue {
   private canvas: fabric.Canvas
   // 選択色
   @Prop()
-  private pickColor1: any
+  private pickColor1: Color
   @Prop()
-  private pickColor2: any
+  private pickColor2: Color
   // 選択キャラ
   @Prop()
   private charactor1: Charactor
@@ -57,67 +58,53 @@ export default class ThumnailCanvas extends Vue {
   @Prop()
   private content: Content
   @Prop()
-  private contentTextColor: any
+  private contentTextColor: Color
   // タイム
   @Prop()
   private timeText: string
   @Prop()
-  private timeTextColor: any
+  private timeTextColor: Color
 
   // 表示オブジェクト
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private taTextObject: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private timeTextObject: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private contentTextObject: any
 
-  public mounted() {
-    this.canvas = new fabric.Canvas("canvas")
+  public mounted(): void {
+    this.canvas = new fabric.Canvas('canvas')
     this.canvas.setWidth(960)
     this.canvas.setHeight(540)
-    const color = "#4A4A4A"
-    // const gradientOptions = {
-    //   type: 'linear',
-    //   coords: {
-    //     x1: "50%", y1: "0%", x2: "50%", y2: "100%"
-    //   },
-    //   colorStops: [
-    //     {
-    //       color: this.pickColor1.hex, offset: 0
-    //     },
-    //     {
-    //       color: this.pickColor2.hex, offset: 1
-    //     }
-    //   ]
-    // }
-
-    // {
-    //     colorStops: [
-    //       {
-    //         offset: "0",
-    //         color: this.pickColor1.hex,
-    //       },
-    //       {
-    //         offset: "0.5",
-    //         color: this.pickColor2.hex,
-    //       }
-    //     ]
-    //   }
-    // const gradient: fabric.Gradient = new fabric.Gradient(gradientOptions)
-    // this.canvas.setBackgroundColor(gradient, () => {})
-
     this.changeProperties()
-    // this.canvas.backgroundColor = this.pickColor1.hex
-    // this.addTimeText()
-    // this.canvas.renderAll()
   }
 
-  private generatImageUrl() {
+  private setGradient(): void {
+    const gradient: fabric.Gradient = new fabric.Gradient({
+      type: 'linear',
+      coords: { x1: 0, y1: 0, x2: 0, y2: 900 },
+      colorStops:
+        [
+          { color: this.pickColor1.hex, offset: '0' },
+          { color: this.pickColor2.hex, offset: '1' },
+        ]
+    })
+    this.canvas.setBackgroundColor(
+      gradient, () => { return }
+    )
+    this.canvas.renderAll()
+  }
+
+  private generatImageUrl(): void {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const downloadLink: any = this.$refs.downloadLink
     downloadLink.href = this.canvas.toDataURL()
     downloadLink.download = 'genshin_ta_thumnail.jpg'
   }
 
   // TAのテキストを追加する
-  private addTaText() {
+  private addTaText(): void {
     const taText = new fabric.Textbox('TA', {
       top: 200,
       left: 200,
@@ -131,7 +118,7 @@ export default class ThumnailCanvas extends Vue {
   }
 
   // コンテンツのテキストを追加する
-  private addContentText() {
+  private addContentText(): void {
     const contentText = new fabric.Textbox(this.content.ja, {
       top: 64,
       left: 36,
@@ -146,7 +133,7 @@ export default class ThumnailCanvas extends Vue {
   }
 
   // タイムのテキストを追加する
-  private addTimeText() {
+  private addTimeText(): void {
     const timeText = new fabric.Textbox(this.timeText, {
       top: 200,
       fontSize: 125,
@@ -158,14 +145,13 @@ export default class ThumnailCanvas extends Vue {
     this.canvas.renderAll()
   }
 
-  //　キャラクター画像を追加する
-  private addImage(charactor: Charactor, num: number) {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // キャラクター画像を追加する
+  private addImage(charactor: Charactor, num: number): void {
+    // eslint-disable-next-line
     const imagePath = require(`../assets/charactor/image/${charactor.tag}_ja.png`)
     fabric.Image.fromURL(imagePath, (img: fabric.Image) => {
       img.scaleToHeight(140)
       const topBase = 220
-      const center = this.canvas.width!! /2
       if (num === 1) {
         img.set('top', topBase + 135)
         img.set('left', (this.canvas.width!! / 2 - img.width!! * 2) - 30)
@@ -195,13 +181,14 @@ export default class ThumnailCanvas extends Vue {
   @Watch('pickColor2', { deep: true, immediate: false })
   @Watch('timeText', { deep: true, immediate: false })
   @Watch('timeTextColor', { deep: true, immediate: false })
-  private changeProperties() {
+  private changeProperties(): void {
     if (!this.canvas) {
       return
     }
     this.canvas.clear()
 
-    this.canvas.backgroundColor = this.pickColor1.hex
+    // this.canvas.backgroundColor = this.pickColor1.hex
+    this.setGradient()
     // タイムテキストで配置箇所を計算するために仮に追加
     this.taTextObject = new fabric.Textbox('TA', {
       fontSize: 120,

@@ -37,11 +37,11 @@ import { Component, Prop, Watch, Vue } from 'vue-property-decorator'
 })
 export default class ColorPicker extends Vue {
   @Prop()
-  private value: any
+  private value: Color
   @Prop()
   private label: string
 
-  private color: any
+  private color: Color
 
   get colorName(): string {
     if(this.color && this.color.hex) {
@@ -68,6 +68,31 @@ export default class ColorPicker extends Vue {
   private changeColor() {
     return this.$emit('input', this.color)
   }
+}
+
+export class Color {
+  alpha: number;
+	hex: string;
+	hexa: string;
+	hsla: {
+		h: number;
+		s: number;
+		l: number;
+		a: number;
+	};
+	hsva: {
+		h: number;
+		s: number;
+		v: number;
+		a: number;
+	};
+	hue: number;
+	rgba: {
+		r: number;
+		g: number;
+		b: number;
+		a: number;
+	}
 }
 </script>
 

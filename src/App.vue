@@ -8,23 +8,23 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import Header from '@/components/layout/Header.vue'
+import { Component, Vue } from 'vue-property-decorator';
+import Header from '@/components/layout/Header.vue';
 
 @Component({
   components: {
-    Header
-  }
+    Header,
+  },
 })
 export default class App extends Vue {}
 </script>
 
 <style lang="scss">
 html {
-  font-family: 'Noto Serif JP', serif;
+  font-family: "Noto Serif JP", serif;
 }
 
 body {
-  font-family: 'Noto Serif JP', serif;
+  font-family: "Noto Serif JP", serif;
 }
 </style>
