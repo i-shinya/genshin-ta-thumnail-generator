@@ -1,5 +1,9 @@
 # genshin-ta-thumnail-generator
 
+原神用のTAサムネイルジェネレーターです。
+以下ページで公開しています。
+https://i-shinya.github.io/genshin-ta-thumnail-generator/
+
 ## Project setup
 ```
 npm install
