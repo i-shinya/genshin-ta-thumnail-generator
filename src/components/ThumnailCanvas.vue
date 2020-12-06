@@ -83,7 +83,7 @@ export default class ThumnailCanvas extends Vue {
   private setGradient(): void {
     const gradient: fabric.Gradient = new fabric.Gradient({
       type: 'linear',
-      coords: { x1: 0, y1: 0, x2: 0, y2: 900 },
+      coords: { x1: 0, y1: 0, x2: 0, y2: 1200 },
       colorStops:
         [
           { color: this.pickColor1.hex, offset: '0' },

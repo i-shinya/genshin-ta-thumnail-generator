@@ -61,6 +61,14 @@
       </v-col>
     </v-row>
     <v-row
+      class="text-right"
+      align="start"
+    >
+      <v-col>
+        <span>※ 鐘離先生と辛炎はキャラ図鑑が更新されていなかったため、更新され次第追加します。</span>
+      </v-col>
+    </v-row>
+    <v-row
       class="text-center"
       align="center"
     >
