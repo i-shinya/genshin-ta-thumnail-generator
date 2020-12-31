@@ -15,6 +15,7 @@ module.exports = {
   },
   plugins: ["vue"],
   rules: {
-    "quotes": ["warn", "single"]
+    "quotes": ["warn", "single"],
+    "no-non-null-assertion": false
   },
 };

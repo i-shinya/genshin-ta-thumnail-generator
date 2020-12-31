@@ -31,6 +31,20 @@ import { Charactor } from '@/components/parts/SelectCharactor.vue'
 import { Content } from '@/components/parts/SelectContent.vue'
 import { Color } from '@/components/parts/ColorPicker.vue'
 
+const LAYER_POSITION = {
+  layer1: {
+    top: 48,
+    fontSize: 130
+  },
+  layer2: {
+    top: 190,
+    fontSize: 110
+  },
+  layer3: {
+    top: 336,
+  }
+}
+
 @Component({
   data() {
     return {
@@ -96,6 +110,7 @@ export default class ThumnailCanvas extends Vue {
     this.canvas.renderAll()
   }
 
+  // サムネイル画像を生成する
   private generatImageUrl(): void {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const downloadLink: any = this.$refs.downloadLink
@@ -103,26 +118,11 @@ export default class ThumnailCanvas extends Vue {
     downloadLink.download = 'genshin_ta_thumnail.jpg'
   }
 
-  // TAのテキストを追加する
-  private addTaText(): void {
-    const taText = new fabric.Textbox('TA', {
-      top: 200,
-      left: 200,
-      fontSize: 125,
-    })
-    taText.set({ fill: this.timeTextColor.hex })
-    taText.set({ left: (this.canvas.width!! - (taText.width + this.timeTextObject.width)) / 2 - 8 } )
-    this.canvas.add(taText)
-    this.taTextObject = taText
-    this.canvas.renderAll()
-  }
-
   // コンテンツのテキストを追加する
   private addContentText(): void {
     const contentText = new fabric.Textbox(this.content.ja, {
-      top: 64,
-      left: 36,
-      fontSize: 130,
+      top: LAYER_POSITION.layer1.top,
+      fontSize: LAYER_POSITION.layer1.fontSize,
     })
     contentText.set({ fill: this.contentTextColor.hex })
     contentText.set({ left: (this.canvas.width!! - contentText.width!!) / 2} )
@@ -132,11 +132,24 @@ export default class ThumnailCanvas extends Vue {
     this.canvas.renderAll()
   }
 
+  // TAのテキストを追加する
+  private addTaText(): void {
+    const taText = new fabric.Textbox('TA', {
+      top: LAYER_POSITION.layer2.top,
+      fontSize: LAYER_POSITION.layer2.fontSize,
+    })
+    taText.set({ fill: this.timeTextColor.hex })
+    taText.set({ left: (this.canvas.width!! - (taText.width + this.timeTextObject.width)) / 2 - 8 } )
+    this.canvas.add(taText)
+    this.taTextObject = taText
+    this.canvas.renderAll()
+  }
+
   // タイムのテキストを追加する
   private addTimeText(): void {
     const timeText = new fabric.Textbox(this.timeText, {
-      top: 200,
-      fontSize: 125,
+      top: LAYER_POSITION.layer2.top,
+      fontSize: LAYER_POSITION.layer2.fontSize,
     })
     timeText.set({ fill: this.timeTextColor.hex })
     timeText.set({ left: (this.canvas.width!! - (this.taTextObject.width + timeText.width)) / 2 + this.taTextObject.width + 8 })
@@ -151,18 +164,18 @@ export default class ThumnailCanvas extends Vue {
     const imagePath = require(`../assets/charactor/image/${charactor.tag}_ja.png`)
     fabric.Image.fromURL(imagePath, (img: fabric.Image) => {
       img.scaleToHeight(140)
-      const topBase = 220
+      const topBase = LAYER_POSITION.layer3.top
       if (num === 1) {
-        img.set('top', topBase + 135)
+        img.set('top', topBase)
         img.set('left', (this.canvas.width!! / 2 - img.width!! * 2) - 30)
       } else if (num === 2) {
-        img.set('top', topBase + 135)
+        img.set('top', topBase)
         img.set('left', (this.canvas.width!! / 2 - img.width!! * 1) - 10)
       } else if (num === 3) {
-        img.set('top', topBase + 135)
+        img.set('top', topBase)
         img.set('left', (this.canvas.width!! / 2) + 10)
       } else if (num === 4) {
-        img.set('top', topBase + 135)
+        img.set('top', topBase)
         img.set('left', (this.canvas.width!! / 2 + img.width!!) + 30)
       }
       this.canvas.add(img)
@@ -187,10 +200,11 @@ export default class ThumnailCanvas extends Vue {
     }
     this.canvas.clear()
 
+    // TODO 単色かグラディエントか選択した場合の分岐を追加する
     // this.canvas.backgroundColor = this.pickColor1.hex
     this.setGradient()
-    // タイムテキストで配置箇所を計算するために仮に追加
-    this.taTextObject = new fabric.Textbox('TA', {
+    // NOTE タイムテキストで配置箇所を計算するために仮に追加
+    this.taTextObject = new fabric.Textbox('', {
       fontSize: 120,
     })
     

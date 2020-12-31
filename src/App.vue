@@ -101,4 +101,8 @@ body {
 .col-1 {
   padding: 4px !important;
 }
+
+.v-subheader {
+  border-bottom: 1px solid rgba(117, 117, 117, 0.6);
+}
 </style>

@@ -43,9 +43,12 @@
       align="center"
     >
       <v-col>
-        <span>
+        <div>
           キャラ選択
-        </span>
+        </div>
+        <div>
+          (パーティ1)
+        </div>
       </v-col>
       <v-col>
         <SelectCharactor v-model="charactor1" />
@@ -58,6 +61,31 @@
       </v-col>
       <v-col>
         <SelectCharactor v-model="charactor4" />
+      </v-col>
+    </v-row>
+    <v-row
+      class="text-center"
+      align="center"
+    >
+      <v-col>
+        <div>
+          キャラ選択
+        </div>
+        <div>
+          (パーティ2)
+        </div>
+      </v-col>
+      <v-col>
+        <SelectCharactor v-model="charactor5" />
+      </v-col>
+      <v-col>
+        <SelectCharactor v-model="charactor6" />
+      </v-col>
+      <v-col>
+        <SelectCharactor v-model="charactor7" />
+      </v-col>
+      <v-col>
+        <SelectCharactor v-model="charactor8" />
       </v-col>
     </v-row>
     <v-row
@@ -134,7 +162,11 @@ import SelectContent from '@/components/parts/SelectContent.vue'
       charactor2: { tag: 'beidou', ja: '北斗', en: 'beidou' },
       charactor3: { tag: 'bennett', ja: 'ベネット', en: 'bennett' },
       charactor4: { tag: 'berbara', ja: 'バーバラ', en: 'berbara' },
-      content: { tag: 'spiralAbyss1', ja: '深境螺旋1層', en: 'Spiral Abyss Floor1' },
+      charactor5: { tag: 'chongyun', ja: '重雲', en: 'chongyun' },
+      charactor6: { tag: 'diluc', ja: 'ディルック', en: 'diluc' },
+      charactor7: { tag: 'diona', ja: 'ディオナ', en: 'diona' },
+      charactor8: { tag: 'fischl', ja: 'フィッシュル', en: 'fischl' },
+      content: { tag: 'spiralAbyss1', numberOfParty: 1, ja: '深境螺旋1層', en: 'Spiral Abyss Floor1' },
       // デフォルトカラー定義
       pickColor1: {
         alpha: 0.291319580078125,

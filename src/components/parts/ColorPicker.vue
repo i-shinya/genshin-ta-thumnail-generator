@@ -14,7 +14,6 @@
           {{ colorName }}
         </v-btn>
       </template>
-
       <v-color-picker
         v-model="color"
         dot-size="15"
