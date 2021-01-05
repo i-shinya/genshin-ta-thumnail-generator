@@ -30,6 +30,7 @@ import { fabric } from 'fabric'
 import { Charactor } from '@/components/parts/SelectCharactor.vue'
 import { Content } from '@/components/parts/SelectContent.vue'
 import { Color } from '@/components/parts/ColorPicker.vue'
+import { Regulation } from '@/components/parts/SelectRegulation.vue'
 
 const LAYER_POSITION = {
   layer1: {
@@ -37,7 +38,7 @@ const LAYER_POSITION = {
     fontSize: 130
   },
   layer2: {
-    top: 190,
+    top: 194,
     fontSize: 110
   },
   layer3: {
@@ -73,6 +74,11 @@ export default class ThumnailCanvas extends Vue {
   private content: Content
   @Prop()
   private contentTextColor: Color
+  // レギュレーション
+  @Prop()
+  private regulation: Regulation
+  @Prop()
+  private regulationTextColor: Color
   // タイム
   @Prop()
   private timeText: string
@@ -81,7 +87,7 @@ export default class ThumnailCanvas extends Vue {
 
   // 表示オブジェクト
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private taTextObject: any
+  private regulationTextObject: any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private timeTextObject: any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -120,39 +126,40 @@ export default class ThumnailCanvas extends Vue {
 
   // コンテンツのテキストを追加する
   private addContentText(): void {
-    const contentText = new fabric.Textbox(this.content.ja, {
+    const contentText = new fabric.Text(this.content.ja, {
       top: LAYER_POSITION.layer1.top,
       fontSize: LAYER_POSITION.layer1.fontSize,
     })
     contentText.set({ fill: this.contentTextColor.hex })
-    contentText.set({ left: (this.canvas.width!! - contentText.width!!) / 2} )
+    contentText.set({ left: (this.canvas.getWidth() - contentText.getScaledWidth()) / 2} )
     
     this.canvas.add(contentText)
     this.contentTextObject = contentText
     this.canvas.renderAll()
   }
 
-  // TAのテキストを追加する
-  private addTaText(): void {
-    const taText = new fabric.Textbox('TA', {
+  // レギュレーションのテキストを追加する
+  private addRegulationText(): void {
+    const taText = new fabric.Text(this.regulation.ja, {
       top: LAYER_POSITION.layer2.top,
       fontSize: LAYER_POSITION.layer2.fontSize,
     })
-    taText.set({ fill: this.timeTextColor.hex })
-    taText.set({ left: (this.canvas.width!! - (taText.width + this.timeTextObject.width)) / 2 - 8 } )
+    taText.set({ fill: this.regulationTextColor.hex })
+    taText.set({ left: (this.canvas.getWidth() - (taText.width + this.timeTextObject.width)) / 2 - 8 } )
     this.canvas.add(taText)
-    this.taTextObject = taText
+    this.regulationTextObject = taText
     this.canvas.renderAll()
   }
 
   // タイムのテキストを追加する
   private addTimeText(): void {
-    const timeText = new fabric.Textbox(this.timeText, {
+    const timeText = new fabric.Text(this.timeText, {
       top: LAYER_POSITION.layer2.top,
       fontSize: LAYER_POSITION.layer2.fontSize,
+      charSpacing : 10
     })
     timeText.set({ fill: this.timeTextColor.hex })
-    timeText.set({ left: (this.canvas.width!! - (this.taTextObject.width + timeText.width)) / 2 + this.taTextObject.width + 8 })
+    timeText.set({ left: (this.canvas.getWidth() - (this.regulationTextObject.width + timeText.width)) / 2 + this.regulationTextObject.width + 8 })
     this.canvas.add(timeText)
     this.timeTextObject = timeText
     this.canvas.renderAll()
@@ -163,20 +170,20 @@ export default class ThumnailCanvas extends Vue {
     // eslint-disable-next-line
     const imagePath = require(`../assets/charactor/image/${charactor.tag}_ja.png`)
     fabric.Image.fromURL(imagePath, (img: fabric.Image) => {
-      img.scaleToHeight(140)
+      img.scaleToHeight(160)
       const topBase = LAYER_POSITION.layer3.top
       if (num === 1) {
         img.set('top', topBase)
-        img.set('left', (this.canvas.width!! / 2 - img.width!! * 2) - 30)
+        img.set('left', (this.canvas.getWidth() / 2 - img.getScaledWidth() * 2) - 48)
       } else if (num === 2) {
         img.set('top', topBase)
-        img.set('left', (this.canvas.width!! / 2 - img.width!! * 1) - 10)
+        img.set('left', (this.canvas.getWidth() / 2 - img.getScaledWidth() * 1) - 16)
       } else if (num === 3) {
         img.set('top', topBase)
-        img.set('left', (this.canvas.width!! / 2) + 10)
+        img.set('left', (this.canvas.getWidth() / 2) + 16)
       } else if (num === 4) {
         img.set('top', topBase)
-        img.set('left', (this.canvas.width!! / 2 + img.width!!) + 30)
+        img.set('left', (this.canvas.getWidth() / 2 + img.getScaledWidth()) + 48)
       }
       this.canvas.add(img)
       this.canvas.renderAll()
@@ -194,6 +201,8 @@ export default class ThumnailCanvas extends Vue {
   @Watch('pickColor2', { deep: true, immediate: false })
   @Watch('timeText', { deep: true, immediate: false })
   @Watch('timeTextColor', { deep: true, immediate: false })
+  @Watch('regulation', { deep: true, immediate: false })
+  @Watch('regulationTextColor', { deep: true, immediate: false })
   private changeProperties(): void {
     if (!this.canvas) {
       return
@@ -204,9 +213,11 @@ export default class ThumnailCanvas extends Vue {
     // this.canvas.backgroundColor = this.pickColor1.hex
     this.setGradient()
     // NOTE タイムテキストで配置箇所を計算するために仮に追加
-    this.taTextObject = new fabric.Textbox('', {
-      fontSize: 120,
-    })
+    if (this.regulation) {
+      this.regulationTextObject = new fabric.Text(this.regulation.ja, {
+        fontSize: 120,
+      })
+    }
     
     if (this.charactor1) {
       this.addImage(this.charactor1, 1)
@@ -226,7 +237,9 @@ export default class ThumnailCanvas extends Vue {
     if (this.timeText && this.timeTextColor) {
       this.addTimeText()
     }
-    this.addTaText()
+    if (this.regulation) {
+      this.addRegulationText()
+    }
     this.canvas.renderAll()
   }
 }

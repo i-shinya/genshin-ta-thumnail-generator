@@ -6,10 +6,10 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
-          :color="colorStyle"
-          dark
+          :color="btnColorStyle"
           v-bind="attrs"
           v-on="on"
+          :class="textColorStyle"
         >
           {{ colorName }}
         </v-btn>
@@ -50,11 +50,24 @@ export default class ColorPicker extends Vue {
     }
   }
 
-  get colorStyle() {
+  get btnColorStyle() {
     if(this.color && this.color.hex) {
       return this.color.hex
     } else {
       return 'gray'
+    }
+  }
+
+  get textColorStyle() {
+    if(this.color && this.color.hex) {
+      const hoge = this.color.rgba.r * 0.299 + this.color.rgba.g * 0.587 + this.color.rgba.b * 0.114
+      if (hoge > 50) {
+        return 'black--text'
+      } else {
+        return 'white--text'
+      }
+    } else {
+      return 'white--text'
     }
   }
 

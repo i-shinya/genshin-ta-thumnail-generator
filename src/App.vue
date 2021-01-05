@@ -99,7 +99,7 @@ body {
 .col-3,
 .col-2,
 .col-1 {
-  padding: 4px !important;
+  padding: 2px !important;
 }
 
 .v-subheader {
