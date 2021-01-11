@@ -16,7 +16,35 @@ import Header from '@/components/layout/Header.vue';
     Header,
   },
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+
+  private created() {
+    this.checkAndUpdateVersion()
+  }
+
+  // アプリのバージョンをチェックし、差異がある場合はバージョンを更新・スーパーリロードする
+  private checkAndUpdateVersion() {
+    // eslint-disable-next-line no-undef
+    const versionUrl = process.env.VUE_APP_VERSION_URL
+    if (versionUrl) {
+      fetch(versionUrl)
+      .then(async (res) => {
+        const json = await res.json()
+        const version = json['version']
+        const localVersion = localStorage.getItem('app_version')
+        if (localVersion !== version) {
+          localStorage.setItem('app_version', version)
+          location.reload(true)
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    } else {
+      console.log('no VUE_APP_VERSION_URL.')
+    }
+  }
+}
 </script>
 
 <style lang="scss">
